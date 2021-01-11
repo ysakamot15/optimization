@@ -1,21 +1,42 @@
 import numpy as np
 import quasi_newton_method as qnm
 
-class objective_function1:
-    def __init__(self, dim):
-        self.dim = dim
+class objective_function_test1:
+    def __init__(self):
+        self.dim = 2
         self.A = np.array([[2, 0.5],
                             [0.5, 1]])
         self.b = np.array([-5, -3])
         self.c = 4
 
-    def f(self, x):
+    def func(self, x):
         return x @ self.A @ x + self.b @ x + self.c
 
-    def nabla_f(self, x):
+    def grad(self, x):
         return 2 * self.A @ x + self.b
 
-class objective_function3:
+class objective_function_test2:
+    def __init__(self):
+        self.dim = 2
+
+    def func(self, x):
+        return x[0] * x[0] + 3 * (x[1] ** 4)
+
+    def grad(self, x):
+        return np.array([2 * x[0], 12 * (x[1] ** 3)])
+
+class objective_function_test3:
+    def __init__(self):
+        self.dim = 2
+
+    def func(self, x):
+        return (x[0] - 2) ** 4 + (x[0] - 2 * x[1]) ** 2
+
+    def grad(self, x):
+        return np.array([4 * (x[0] - 2) ** 3 + 2 * (x[0] - 2 * x[1]),
+                        -4 *  (x[0] - 2 * x[1])])
+
+class objective_function_test4:
     def __init__(self, dim):
         self.dim = dim
         self.A = np.random.randn(dim, dim)
@@ -23,32 +44,28 @@ class objective_function3:
         self.b = np.random.randn(dim)
         self.c = np.random.randn(1)
         
-    def f(self, x):
+    def func(self, x):
         return x @ self.A @ x + self.b @ x + self.c
 
-    def nabla_f(self, x):
+    def grad(self, x):
         return 2 * self.A @ x + self.b
 
     def analytic_solution(self):
         x_opt = -0.5 * np.linalg.inv(self.A) @ self.b
         return x_opt
 
-class objective_function2:
-    def __init__(self, dim):
-        self.dim = dim
-
-    def f(self, x):
-        return x[0] * x[0] + 3 * (x[1] ** 4)
-
-    def nabla_f(self, x):
-        return np.array([2 * x[0], 12 * (x[1] ** 3)])
-
 def main():
-    func = objective_function3(200)
-    print(qnm.quasi_newton(func, eps=1e-3))
-    x_a = func.analytic_solution()
-    print("correct:", x_a, func.f(x_a))
+    objective = objective_function_test1()
+    print(qnm.quasi_newton(objective, eps=1e-6))
     
+    objective = objective_function_test2()
+    print(qnm.quasi_newton(objective, eps=1e-6))
+
+    objective = objective_function_test3()
+    print(qnm.quasi_newton(objective, eps=1e-6))
+    
+    objective = objective_function_test4(200)
+    print(qnm.quasi_newton(objective, eps=1e-3))
 
 if __name__ == '__main__':
     main()
