@@ -1,7 +1,6 @@
 import numpy as np
 import copy
 
-
 # アルミホ条件を満たすαを線形探索
 def backtracking_line_search(objective, x, d, tau1, beta):
     alpha = 1
@@ -20,7 +19,7 @@ def backtracking_line_search(objective, x, d, tau1, beta):
 def quasi_newton(objective, eps = 1e-9, tau1 = 0.5, beta = 0.9):
     H = np.eye(objective.dim) # = inv(B)
     x = np.random.randn(objective.dim)
-    
+
     while(1):
         grad = objective.grad(x)
         if(np.linalg.norm(grad) <= eps):
