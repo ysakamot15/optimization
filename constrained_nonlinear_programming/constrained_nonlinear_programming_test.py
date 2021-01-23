@@ -147,26 +147,26 @@ class function6:
 def main():
     dim = 2
     P = ipm.problem(function3(), [function_positive_constraint(dim, i) for i in range(dim)], [function4()])
-    x_opt, s_opt, u_opt, v_opt = ipm.inter_point(P, eps = 1e-10)
+    x_opt, s_opt, u_opt, v_opt = ipm.interior_point(P, eps = 1e-10)
     print(x_opt, P.objective.func(x_opt))
 
-    # dim = 50
-    # num = 20
-    # lcf = linear_constraint_factory(dim, num)
-    # P = ipm.problem(function_quadratic_objective(dim), 
-    #                 [function_positive_constraint(dim, i) for i in range(dim)],
-    #                 [lcf.create(i) for i in range(num)])
-    # x_opt, s_opt, u_opt, v_opt = ipm.inter_point(P, eps = 1e-10)
-    # print(x_opt, s_opt, u_opt, v_opt, P.objective.func(x_opt))
+    dim = 50
+    num = 20
+    lcf = linear_constraint_factory(dim, num)
+    P = ipm.problem(function_quadratic_objective(dim), 
+                    [function_positive_constraint(dim, i) for i in range(dim)],
+                    [lcf.create(i) for i in range(num)])
+    x_opt, s_opt, u_opt, v_opt = ipm.interior_point(P, eps = 1e-10)
+    print(x_opt, s_opt, u_opt, v_opt, P.objective.func(x_opt))
 
-    # dim = 50
-    # num = 20
-    # lcf = linear_constraint_factory(dim, num)
-    # P = ipm.problem(function_quadratic_objective(dim), 
-    #                 [lcf.create(i) for i in range(num)],
-    #                 [])
-    # x_opt, s_opt, u_opt, v_opt = ipm.inter_point(P, eps = 1e-10)
-    # print(x_opt, s_opt, u_opt, v_opt, P.objective.func(x_opt))
+    dim = 50
+    num = 20
+    lcf = linear_constraint_factory(dim, num)
+    P = ipm.problem(function_quadratic_objective(dim), 
+                    [lcf.create(i) for i in range(num)],
+                    [])
+    x_opt, s_opt, u_opt, v_opt = ipm.interior_point(P, eps = 1e-10)
+    print(x_opt, s_opt, u_opt, v_opt, P.objective.func(x_opt))
 
 
 if __name__ == '__main__':
