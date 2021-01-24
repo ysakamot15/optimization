@@ -73,7 +73,7 @@ def backtracking_line_search(problem, x, s, u, dx, ds, du, rho, eta, beta):
     return res_alpha
 
 # problem : 最適化問題
-# eps     : 収束判定
+# eps     : 収束判定基準
 # eta     : メリット関数パラメータ
 # beta    : 直線探索の減衰パラメータ
 # t       : ρ更新時のパラメータ
